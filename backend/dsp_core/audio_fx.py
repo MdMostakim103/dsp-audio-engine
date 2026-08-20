@@ -9,6 +9,11 @@ def reduce_volume(audio_array: np.ndarray, factor: float = 0.5) -> np.ndarray:
     modified_audio = audio_array * factor
     return modified_audio
 
+
+def amplify_volume(audio_array: np.ndarray,factor: float=4.0) -> np.ndarray:
+    modified_audio = audio_array * factor
+    return modified_audio
+
 def apply_reverb(y: np.ndarray, sr: int) -> np.ndarray:
     """Applies a synthetic convolution reverb to simulate a large room."""
     # 1. Create a synthetic Impulse Response (IR)
