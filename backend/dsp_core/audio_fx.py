@@ -88,3 +88,44 @@ def apply_noise_reduction(y: np.ndarray, sr: int) -> np.ndarray:
 
     return smoothed_y
 
+
+def apply_equalizer(y: np.ndarray, sr: int) -> np.ndarray:
+    """
+    A basic 3-band equalizer using Fast Fourier Transform (FFT).
+    It boosts bass and treble, while reducing mid frequencies.
+    """
+
+    # 1. Convert the audio from the Time Domain to the Frequency Domain
+    # This separates the single sound wave into all its individual pitches (like a rainbow)
+    Y_freq = np.fft.rfft(y)
+    freqs = np.fft.rfftfreq(len(y), 1/sr)
+
+    # 2. Set up our volume controls (Gains) for 3 different bands
+    low_gain = 2.0      # Bass frequencies (Boost 200%)
+    mid_gain = 0.5      # Mid frequencies (Cut to 50%)
+    high_gain = 1.5     # Treble frequencies (Boost 150%)
+
+    # 3. Apply the changes to the specific frequency bands using NumPy
+    # Lows: Anything below 250 Hz
+    Y_freq[(freqs < 250)] *= low_gain
+
+    # Mids: Anything between 250 Hz and 4000 Hz
+    Y_freq[(freqs >= 250) & (freqs < 4000)] *= mid_gain
+
+    # Highs: Anything above 4000 Hz
+    Y_freq[(freqs >= 4000)] *= high_gain
+
+    # 4. Convert the audio back to the Time Domain so we can hear it
+    # n=len(y) ensures the output is the exact same length as the input
+    y_eq = np.fft.irfft(Y_freq, n = len(y))
+
+    # 5. Normalize to prevent distortion (clipping)
+    y_eq = y_eq / np.max(np.abs(y_eq))
+
+    return y_eq
+
+
+
+
+
+

@@ -3,7 +3,7 @@ from pathlib import Path
 import librosa
 import soundfile as sf
 
-from dsp_core.audio_fx import reduce_volume, apply_reverb, apply_echo, apply_noise_reduction
+from dsp_core.audio_fx import reduce_volume, apply_reverb, apply_echo, apply_noise_reduction, apply_equalizer
 from dsp_core.visualizer import generate_comparison_plot
 
 router = APIRouter()
@@ -27,6 +27,8 @@ async def process_audio(file: UploadFile = File(...), effect: str = Form(...)):
         y_modified = apply_echo(y, sr)
     elif effect == "noise":
         y_modified = apply_noise_reduction(y, sr)
+    elif effect == "equalizer":
+        y_modified = apply_equalizer(y, sr)
     else:    
         y_modified = reduce_volume(y, 0.5)
 

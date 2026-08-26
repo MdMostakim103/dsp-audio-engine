@@ -20,6 +20,7 @@ export default function UploadDashboard({ file, loading, originalAudioURL, effec
           <option value="reverb">Cathedral Convolution Reverb</option>
           <option value ="echo">Echo (0.5s Delay)</option>
           <option value ="noise">Remove Noise (Smoothing)</option>
+          <option value = "equlizer">V-Shape Equalizer</option>
         </select>
       </div>
 
