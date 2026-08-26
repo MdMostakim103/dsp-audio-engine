@@ -18,6 +18,7 @@ export default function UploadDashboard({ file, loading, originalAudioURL, effec
         >
           <option value="volume">Reduce Volume (50%)</option>
           <option value="reverb">Cathedral Convolution Reverb</option>
+          <option value ="echo">Echo (0.5s Delay)</option>
         </select>
       </div>
 

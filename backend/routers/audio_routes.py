@@ -3,7 +3,7 @@ from pathlib import Path
 import librosa
 import soundfile as sf
 
-from dsp_core.audio_fx import reduce_volume, apply_reverb
+from dsp_core.audio_fx import reduce_volume, apply_reverb, apply_echo
 from dsp_core.visualizer import generate_comparison_plot
 
 router = APIRouter()
@@ -23,7 +23,9 @@ async def process_audio(file: UploadFile = File(...), effect: str = Form(...)):
     # 2. Route the math based on the frontend selection
     if effect == "reverb":
         y_modified = apply_reverb(y, sr)
-    else:
+    elif effect == "echo":
+        y_modified = apply_echo(y, sr)
+    else:    
         y_modified = reduce_volume(y, 0.5)
 
     # 3. NEW: Add the effect name to the plot filename to bust the browser cache!

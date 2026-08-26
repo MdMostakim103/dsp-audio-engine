@@ -44,3 +44,28 @@ def apply_reverb(y: np.ndarray, sr: int) -> np.ndarray:
     final_mix = (y_padded * 0.6) + (y_reverb * 0.4)
     
     return final_mix
+
+
+def apply_echo(y: np.ndarray, sr: int) -> np.ndarray:
+    """
+    Adds a simple echo by delaying the sound and mixing it with the original.
+    """
+    # 1. Figure out how many samples make up a 0.5 second delay
+    delay_seconds = 0.5
+    delay_samples = int(sr * delay_seconds)
+
+    # 2. Create the delayed audio by adding silence (zeros) to the beginning
+    silence = np.zeros(delay_samples)
+    delayed_y = np.concatenate((silence, y))
+
+    # 3. The delayed audio is now longer than the original.
+    # Let's pad the original audio with zeros at the end so they match in length.
+    original_padded = np.concatenate((y, silence))
+
+    # 4. Mix them together. Original at 80% volume, Echo at 40% volume.
+    echo_mix = (original_padded * 0.8) + (delayed_y * 0.4)
+
+    # 5. Make sure the volume isn't too loud to prevent distortion (normalization)
+    echo_mix = echo_mix / np.max(np.abs(echo_mix))
+
+    return echo_mix
