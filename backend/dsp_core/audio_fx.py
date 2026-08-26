@@ -69,3 +69,22 @@ def apply_echo(y: np.ndarray, sr: int) -> np.ndarray:
     echo_mix = echo_mix / np.max(np.abs(echo_mix))
 
     return echo_mix
+
+
+def apply_noise_reduction(y: np.ndarray, sr: int) -> np.ndarray:
+    """
+    Reduces static/background noise using a moving average (time-domain smoothing).
+    """
+    # 1. Choose how many numbers to average together at a time. 5 is a good balance: it smooths the static without muffling the real audio too much.
+    window_size = 5
+
+    # 2. Create the "smoothing brush" (the filter)
+    # This creates a NumPy array that looks like this: [0.2, 0.2, 0.2, 0.2, 0.2]
+    filter_window = np.ones(window_size) / window_size
+
+    # 3. Slide the brush across the entire audio wave (Convolution)
+    # The mode='same' guarantees our output is the exact same length as our input.
+    smoothed_y = np.convolve(y, filter_window, mode = 'same')
+
+    return smoothed_y
+
