@@ -3,7 +3,7 @@ from pathlib import Path
 import librosa
 import soundfile as sf
 
-from dsp_core.audio_fx import reduce_volume, apply_reverb, apply_echo, apply_noise_reduction, apply_equalizer
+from dsp_core.audio_fx import (reduce_volume,amplify_volume,apply_reverb,apply_echo,apply_noise_reduction,apply_equalizer)
 from dsp_core.visualizer import generate_comparison_plot
 
 router = APIRouter()
@@ -25,6 +25,8 @@ async def process_audio(file: UploadFile = File(...), effect: str = Form(...)):
         y_modified = apply_reverb(y, sr)
     elif effect == "echo":
         y_modified = apply_echo(y, sr)
+    elif effect == "amplify":
+        y_modified = amplify_volume(y,2.0)
     elif effect == "noise":
         y_modified = apply_noise_reduction(y, sr)
     elif effect == "equalizer":
@@ -41,12 +43,14 @@ async def process_audio(file: UploadFile = File(...), effect: str = Form(...)):
     output_path = Path("static/processed") / output_filename
     sf.write(output_path, y_modified, sr)
 
-    duration = librosa.get_duration(y=y, sr=sr)
+    input_duration = librosa.get_duration(y=y, sr=sr)
+    processed_duration = librosa.get_duration(y=y_modified, sr=sr)
 
     # 5. Return the newly updated URLs sent to React
     return {
         "filename": file.filename,
-        "duration_seconds": round(duration, 2),
+        "input_duration_seconds": round(input_duration, 2),
+        "processed_duration_seconds" : round(processed_duration,2),
         "status": f"Audio processed with '{effect}' and graphed successfully!",
         "plot_url": f"http://127.0.0.1:8000/static/plots/plot_{plot_filename}.png",
         "audio_url": f"http://127.0.0.1:8000/static/processed/{output_filename}"

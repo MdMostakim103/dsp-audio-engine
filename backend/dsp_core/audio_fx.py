@@ -13,6 +13,9 @@ def reduce_volume(audio_array: np.ndarray, factor: float = 0.5) -> np.ndarray:
 
 def amplify_volume(audio_array: np.ndarray,factor: float=4.0) -> np.ndarray:
     modified_audio = audio_array * factor
+
+    print("Original: ",np.max(np.abs(audio_array)))
+    print("Modified: ",np.max(np.abs(modified_audio)))
     return modified_audio
 
 def apply_reverb(y: np.ndarray, sr: int) -> np.ndarray:
