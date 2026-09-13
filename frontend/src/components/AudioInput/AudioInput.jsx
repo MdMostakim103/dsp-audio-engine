@@ -260,6 +260,17 @@ function AudioInput() {
                             </div>
                         </div>
                     </div>
+                    {/* --- NEW 4-PANEL GRAPH VISUALZER --- */}
+                    {processedAudio.plotUrl && (
+                        <div className = "plot-container" style = {{ marginTop : "30px", textAlign : "center" }}>
+                            <h3 style = {{ marginBottom : "15px"  }}>DSP Signal Analysis</h3>
+                            <img 
+                                src = {processedAudio.plotUrl} 
+                                alt = "4-Panel DSP Graph"
+                                style = {{ width : "100%", maxWidth : "900px", borderRadius : "10px", border : "1px solid #333" }}
+                            />
+                        </div>
+                    )}
 
                 </div>
             )}
