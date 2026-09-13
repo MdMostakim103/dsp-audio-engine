@@ -3,15 +3,15 @@
        BACKGROUND
        ========================= */
 
-    --bg-primary: #050507;
+    --bg-primary: #7678ed;
     --bg-secondary: #0a0a10;
 
     /* =========================
        SURFACES
        ========================= */
 
-    --surface: rgba(255, 255, 255, 0.045);
-    --surface-hover: rgba(255, 255, 255, 0.075);
+    --surface: rgba(61, 52, 139);
+    --surface-hover: rgba(221, 161, 94);
 
     --border: rgba(255, 255, 255, 0.12);
 
@@ -20,15 +20,15 @@
        ========================= */
 
     --text-primary: #f5f5f7;
-    --text-secondary: #a7a7b3;
-    --text-muted: #666673;
+    --text-secondary: #f5f5f7;
+    --text-muted: #f5f5f7;
 
     /* =========================
        ACCENT COLORS
        ========================= */
 
-    --accent-primary: #9b5cff;
-    --accent-secondary: #5c8cff;
+    --accent-primary: #f7b801;
+    --accent-secondary: #f18701;
 
     /* Gradient used throughout
        the application */
@@ -43,7 +43,7 @@
     /* Glow */
 
     --accent-glow:
-        0 0 30px rgba(155, 92, 255, 0.25);
+        0 0 30px rgba(92, 233, 255, 0.25);
 
     /* =========================
        SHAPE
